@@ -117,11 +117,21 @@ jobs:
         working-directory: ./backend
         run: |
           npm run build
-          NODE_ENV=development npm start &
-          sleep 5
+          NODE_ENV=development npm start > server.log 2>&1 &
+          SERVER_PID=$!
+          echo "Server PID: $SERVER_PID"
+          sleep 10
+          if ! kill -0 $SERVER_PID 2>/dev/null; then
+            echo "Server failed to start. Logs:"
+            cat server.log
+            exit 1
+          fi
+          echo "Server started successfully"
 
       - name: Health check
-        run: curl http://localhost:5000/health
+        working-directory: ./backend
+        run: |
+          curl http://localhost:5000/health || (echo "Health check failed. Server logs:"; cat server.log; exit 1)
 
       - name: Run integration tests
         run: echo "Integration tests will be added in Sprint 2"
