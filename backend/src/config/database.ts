@@ -226,14 +226,48 @@ export const initializeDatabase = async (): Promise<void> => {
     // Enable foreign keys
     await runAsync('PRAGMA foreign_keys = ON');
 
-    // Split schema into individual statements and execute them
+    // Split schema into CREATE TABLE and CREATE INDEX statements
     const statements = schema
       .split(';')
       .map(s => s.trim())
       .filter(s => s.length > 0 && !s.startsWith('--'));
 
-    for (const statement of statements) {
-      await runAsync(statement);
+    // Separate CREATE TABLE and CREATE INDEX statements
+    const createTableStatements = statements.filter(s => s.toUpperCase().includes('CREATE TABLE'));
+    const createIndexStatements = statements.filter(s => s.toUpperCase().includes('CREATE INDEX'));
+    const otherStatements = statements.filter(s =>
+      !s.toUpperCase().includes('CREATE TABLE') &&
+      !s.toUpperCase().includes('CREATE INDEX')
+    );
+
+    // Execute CREATE TABLE statements first
+    for (const statement of createTableStatements) {
+      try {
+        await runAsync(statement);
+      } catch (error) {
+        console.error(`Error executing CREATE TABLE: ${statement.substring(0, 50)}...`, error);
+        throw error;
+      }
+    }
+
+    // Then execute other statements
+    for (const statement of otherStatements) {
+      try {
+        await runAsync(statement);
+      } catch (error) {
+        console.error(`Error executing statement: ${statement.substring(0, 50)}...`, error);
+        // Don't throw for other statements, just log
+      }
+    }
+
+    // Finally execute CREATE INDEX statements
+    for (const statement of createIndexStatements) {
+      try {
+        await runAsync(statement);
+      } catch (error) {
+        console.error(`Error executing CREATE INDEX: ${statement.substring(0, 50)}...`, error);
+        // Don't throw for index creation failures
+      }
     }
 
     console.log('✅ Database schema initialized successfully');
