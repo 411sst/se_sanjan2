@@ -9,8 +9,8 @@ coverage/
 *.log
 
 # Production
-/build
-/dist
+build/
+dist/
 
 # Environment variables
 .env
