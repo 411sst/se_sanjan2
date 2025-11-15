@@ -68,7 +68,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 const startServer = async () => {
   try {
     // Initialize database
-    initializeDatabase();
+    await initializeDatabase();
 
     // Connect to Redis (optional - app continues without it)
     await connectRedis();
