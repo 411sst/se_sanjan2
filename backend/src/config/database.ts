@@ -229,8 +229,19 @@ export const initializeDatabase = async (): Promise<void> => {
     // Split schema into individual statements and execute them
     const statements = schema
       .split(';')
-      .map(s => s.trim())
-      .filter(s => s.length > 0 && !s.startsWith('--'));
+      .map(s => {
+        // Remove comment-only lines while preserving SQL
+        return s
+          .split('\n')
+          .filter(line => {
+            const trimmed = line.trim();
+            // Keep non-empty lines that don't start with --
+            return trimmed.length > 0 && !trimmed.startsWith('--');
+          })
+          .join('\n')
+          .trim();
+      })
+      .filter(s => s.length > 0);
 
     for (const statement of statements) {
       await runAsync(statement);
