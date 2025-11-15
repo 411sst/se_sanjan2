@@ -7,7 +7,7 @@ const router = Router();
  * @desc    Get customer profile
  * @access  Private (Customer)
  */
-router.get('/profile', (req, res) => {
+router.get('/profile', (_req, res) => {
   res.json({ message: 'Get customer profile endpoint' });
 });
 
@@ -16,7 +16,7 @@ router.get('/profile', (req, res) => {
  * @desc    Update customer profile
  * @access  Private (Customer)
  */
-router.put('/profile', (req, res) => {
+router.put('/profile', (_req, res) => {
   res.json({ message: 'Update customer profile endpoint' });
 });
 
@@ -25,7 +25,7 @@ router.put('/profile', (req, res) => {
  * @desc    Get customer's coupon wallet
  * @access  Private (Customer)
  */
-router.get('/wallet', (req, res) => {
+router.get('/wallet', (_req, res) => {
   res.json({ message: 'Get customer wallet endpoint' });
 });
 
@@ -34,7 +34,7 @@ router.get('/wallet', (req, res) => {
  * @desc    Claim a coupon
  * @access  Private (Customer)
  */
-router.post('/claim/:couponId', (req, res) => {
+router.post('/claim/:couponId', (_req, res) => {
   res.json({ message: 'Claim coupon endpoint' });
 });
 
@@ -43,7 +43,7 @@ router.post('/claim/:couponId', (req, res) => {
  * @desc    Get customer's redemption history
  * @access  Private (Customer)
  */
-router.get('/redemptions', (req, res) => {
+router.get('/redemptions', (_req, res) => {
   res.json({ message: 'Get customer redemptions endpoint' });
 });
 
@@ -52,7 +52,7 @@ router.get('/redemptions', (req, res) => {
  * @desc    Get customer notifications
  * @access  Private (Customer)
  */
-router.get('/notifications', (req, res) => {
+router.get('/notifications', (_req, res) => {
   res.json({ message: 'Get customer notifications endpoint' });
 });
 
@@ -61,7 +61,7 @@ router.get('/notifications', (req, res) => {
  * @desc    Mark notification as read
  * @access  Private (Customer)
  */
-router.put('/notifications/:id/read', (req, res) => {
+router.put('/notifications/:id/read', (_req, res) => {
   res.json({ message: 'Mark notification as read endpoint' });
 });
 

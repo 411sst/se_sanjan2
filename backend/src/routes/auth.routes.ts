@@ -7,7 +7,7 @@ const router = Router();
  * @desc    Register a new merchant
  * @access  Public
  */
-router.post('/register/merchant', (req, res) => {
+router.post('/register/merchant', (_req, res) => {
   res.status(201).json({ message: 'Merchant registration endpoint' });
 });
 
@@ -16,7 +16,7 @@ router.post('/register/merchant', (req, res) => {
  * @desc    Register a new customer
  * @access  Public
  */
-router.post('/register/customer', (req, res) => {
+router.post('/register/customer', (_req, res) => {
   res.status(201).json({ message: 'Customer registration endpoint' });
 });
 
@@ -25,7 +25,7 @@ router.post('/register/customer', (req, res) => {
  * @desc    Login user (merchant/customer)
  * @access  Public
  */
-router.post('/login', (req, res) => {
+router.post('/login', (_req, res) => {
   res.json({ message: 'Login endpoint' });
 });
 
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
  * @desc    Send OTP for customer login
  * @access  Public
  */
-router.post('/send-otp', (req, res) => {
+router.post('/send-otp', (_req, res) => {
   res.json({ message: 'Send OTP endpoint' });
 });
 
@@ -43,7 +43,7 @@ router.post('/send-otp', (req, res) => {
  * @desc    Verify OTP for customer login
  * @access  Public
  */
-router.post('/verify-otp', (req, res) => {
+router.post('/verify-otp', (_req, res) => {
   res.json({ message: 'Verify OTP endpoint' });
 });
 
@@ -52,7 +52,7 @@ router.post('/verify-otp', (req, res) => {
  * @desc    Request password reset
  * @access  Public
  */
-router.post('/forgot-password', (req, res) => {
+router.post('/forgot-password', (_req, res) => {
   res.json({ message: 'Forgot password endpoint' });
 });
 
@@ -61,7 +61,7 @@ router.post('/forgot-password', (req, res) => {
  * @desc    Reset password with token
  * @access  Public
  */
-router.post('/reset-password', (req, res) => {
+router.post('/reset-password', (_req, res) => {
   res.json({ message: 'Reset password endpoint' });
 });
 
@@ -70,7 +70,7 @@ router.post('/reset-password', (req, res) => {
  * @desc    Refresh access token
  * @access  Public
  */
-router.post('/refresh-token', (req, res) => {
+router.post('/refresh-token', (_req, res) => {
   res.json({ message: 'Refresh token endpoint' });
 });
 
@@ -79,7 +79,7 @@ router.post('/refresh-token', (req, res) => {
  * @desc    Logout user
  * @access  Private
  */
-router.post('/logout', (req, res) => {
+router.post('/logout', (_req, res) => {
   res.json({ message: 'Logout endpoint' });
 });
 

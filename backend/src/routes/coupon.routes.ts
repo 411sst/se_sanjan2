@@ -7,7 +7,7 @@ const router = Router();
  * @desc    Browse/search coupons (public)
  * @access  Public
  */
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({ message: 'Browse coupons endpoint' });
 });
 
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
  * @desc    Get coupon details
  * @access  Public
  */
-router.get('/:id', (req, res) => {
+router.get('/:id', (_req, res) => {
   res.json({ message: 'Get coupon details endpoint' });
 });
 
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
  * @desc    Validate coupon code
  * @access  Public
  */
-router.post('/validate', (req, res) => {
+router.post('/validate', (_req, res) => {
   res.json({ message: 'Validate coupon endpoint' });
 });
 
@@ -34,7 +34,7 @@ router.post('/validate', (req, res) => {
  * @desc    Initiate redemption (QR scan, send OTP)
  * @access  Private (Customer)
  */
-router.post('/redeem/initiate', (req, res) => {
+router.post('/redeem/initiate', (_req, res) => {
   res.json({ message: 'Initiate redemption endpoint' });
 });
 
@@ -43,7 +43,7 @@ router.post('/redeem/initiate', (req, res) => {
  * @desc    Verify OTP and complete redemption
  * @access  Private (Merchant)
  */
-router.post('/redeem/verify', (req, res) => {
+router.post('/redeem/verify', (_req, res) => {
   res.json({ message: 'Verify redemption endpoint' });
 });
 
@@ -52,7 +52,7 @@ router.post('/redeem/verify', (req, res) => {
  * @desc    Get all coupon categories
  * @access  Public
  */
-router.get('/categories', (req, res) => {
+router.get('/categories', (_req, res) => {
   res.json({ message: 'Get categories endpoint' });
 });
 

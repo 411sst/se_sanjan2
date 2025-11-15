@@ -1,5 +1,3 @@
-import request from 'supertest';
-
 // Simple test to verify testing framework is set up correctly
 describe('Testing Framework', () => {
   it('should pass a basic test', () => {
