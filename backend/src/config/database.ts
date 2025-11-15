@@ -1,6 +1,7 @@
-import Database from 'better-sqlite3';
+import sqlite3 from 'sqlite3';
 import path from 'path';
 import fs from 'fs';
+import { promisify } from 'util';
 
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../../database/couponify.db');
 const DB_DIR = path.dirname(DB_PATH);
@@ -10,18 +11,31 @@ if (!fs.existsSync(DB_DIR)) {
   fs.mkdirSync(DB_DIR, { recursive: true });
 }
 
+// Enable verbose mode in development
+const dbMode = process.env.NODE_ENV === 'development' ? sqlite3.verbose() : sqlite3;
+
 // Create database connection
-export const db = new Database(DB_PATH, { verbose: console.log });
+export const db = new dbMode.Database(DB_PATH, (err) => {
+  if (err) {
+    console.error('❌ Error opening database:', err.message);
+  } else {
+    console.log('✅ Connected to SQLite database');
+  }
+});
 
-// Enable foreign keys
-db.pragma('foreign_keys = ON');
+// Promisify database methods for easier use
+const runAsync = promisify(db.run.bind(db));
+const allAsync = promisify(db.all.bind(db));
+const getAsync = promisify(db.get.bind(db));
 
-// Configure WAL mode for better concurrency
-db.pragma('journal_mode = WAL');
+// Export promisified methods
+export const dbRun = runAsync;
+export const dbAll = allAsync;
+export const dbGet = getAsync;
 
 // Initialize database schema
-export const initializeDatabase = (): void => {
-  db.exec(`
+export const initializeDatabase = async (): Promise<void> => {
+  const schema = `
     -- Users table
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -206,20 +220,50 @@ export const initializeDatabase = (): void => {
     CREATE INDEX IF NOT EXISTS idx_notifications_status ON notifications(status);
     CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
     CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
-  `);
+  `;
 
-  console.log('✅ Database schema initialized successfully');
+  try {
+    // Enable foreign keys
+    await runAsync('PRAGMA foreign_keys = ON');
+
+    // Split schema into individual statements and execute them
+    const statements = schema
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0 && !s.startsWith('--'));
+
+    for (const statement of statements) {
+      await runAsync(statement);
+    }
+
+    console.log('✅ Database schema initialized successfully');
+  } catch (error) {
+    console.error('❌ Error initializing database:', error);
+    throw error;
+  }
 };
 
 // Close database connection
-export const closeDatabase = (): void => {
-  db.close();
-  console.log('✅ Database connection closed');
+export const closeDatabase = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    db.close((err) => {
+      if (err) {
+        console.error('❌ Error closing database:', err.message);
+        reject(err);
+      } else {
+        console.log('✅ Database connection closed');
+        resolve();
+      }
+    });
+  });
 };
 
 // Handle cleanup on exit
-process.on('exit', closeDatabase);
-process.on('SIGINT', () => {
-  closeDatabase();
+process.on('exit', () => {
+  db.close();
+});
+
+process.on('SIGINT', async () => {
+  await closeDatabase();
   process.exit(0);
 });
