@@ -7,7 +7,7 @@ const router = Router();
  * @desc    Get merchant profile
  * @access  Private (Merchant)
  */
-router.get('/profile', (req, res) => {
+router.get('/profile', (_req, res) => {
   res.json({ message: 'Get merchant profile endpoint' });
 });
 
@@ -16,7 +16,7 @@ router.get('/profile', (req, res) => {
  * @desc    Update merchant profile
  * @access  Private (Merchant)
  */
-router.put('/profile', (req, res) => {
+router.put('/profile', (_req, res) => {
   res.json({ message: 'Update merchant profile endpoint' });
 });
 
@@ -25,7 +25,7 @@ router.put('/profile', (req, res) => {
  * @desc    Get merchant dashboard analytics
  * @access  Private (Merchant)
  */
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', (_req, res) => {
   res.json({ message: 'Get merchant dashboard endpoint' });
 });
 
@@ -34,7 +34,7 @@ router.get('/dashboard', (req, res) => {
  * @desc    Get detailed analytics
  * @access  Private (Merchant)
  */
-router.get('/analytics', (req, res) => {
+router.get('/analytics', (_req, res) => {
   res.json({ message: 'Get merchant analytics endpoint' });
 });
 
@@ -43,7 +43,7 @@ router.get('/analytics', (req, res) => {
  * @desc    Get all merchant coupons
  * @access  Private (Merchant)
  */
-router.get('/coupons', (req, res) => {
+router.get('/coupons', (_req, res) => {
   res.json({ message: 'Get merchant coupons endpoint' });
 });
 
@@ -52,7 +52,7 @@ router.get('/coupons', (req, res) => {
  * @desc    Create new coupon
  * @access  Private (Merchant)
  */
-router.post('/coupons', (req, res) => {
+router.post('/coupons', (_req, res) => {
   res.status(201).json({ message: 'Create coupon endpoint' });
 });
 
@@ -61,7 +61,7 @@ router.post('/coupons', (req, res) => {
  * @desc    Get coupon by ID
  * @access  Private (Merchant)
  */
-router.get('/coupons/:id', (req, res) => {
+router.get('/coupons/:id', (_req, res) => {
   res.json({ message: 'Get coupon by ID endpoint' });
 });
 
@@ -70,7 +70,7 @@ router.get('/coupons/:id', (req, res) => {
  * @desc    Update coupon
  * @access  Private (Merchant)
  */
-router.put('/coupons/:id', (req, res) => {
+router.put('/coupons/:id', (_req, res) => {
   res.json({ message: 'Update coupon endpoint' });
 });
 
@@ -79,7 +79,7 @@ router.put('/coupons/:id', (req, res) => {
  * @desc    Delete coupon
  * @access  Private (Merchant)
  */
-router.delete('/coupons/:id', (req, res) => {
+router.delete('/coupons/:id', (_req, res) => {
   res.json({ message: 'Delete coupon endpoint' });
 });
 
@@ -88,7 +88,7 @@ router.delete('/coupons/:id', (req, res) => {
  * @desc    Get all redemptions for merchant
  * @access  Private (Merchant)
  */
-router.get('/redemptions', (req, res) => {
+router.get('/redemptions', (_req, res) => {
   res.json({ message: 'Get merchant redemptions endpoint' });
 });
 

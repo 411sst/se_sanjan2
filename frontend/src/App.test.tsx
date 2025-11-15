@@ -21,5 +21,5 @@ const renderWithProviders = (component: React.ReactElement) => {
 
 test('renders without crashing', () => {
   renderWithProviders(<App />);
-  expect(screen.getByText(/Couponify/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Couponify/i).length).toBeGreaterThan(0);
 });
