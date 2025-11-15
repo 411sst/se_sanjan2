@@ -230,7 +230,7 @@ export const initializeDatabase = async (): Promise<void> => {
     const statements = schema
       .split(';')
       .map(s => s.trim())
-      .filter(s => s.length > 0 && !s.startsWith('--'));
+      .filter(s => s.length > 0);
 
     for (const statement of statements) {
       await runAsync(statement);
