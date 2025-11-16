@@ -83,7 +83,7 @@ const couponService = {
 
   // Get customer wallet (claimed coupons)
   getWallet: async () => {
-    const response = await api.get('/customer/wallet');
+    const response = await api.get('/customers/wallet');
     return response.data;
   },
 
@@ -103,43 +103,43 @@ const couponService = {
 
   // Get merchant's coupons
   getMerchantCoupons: async () => {
-    const response = await api.get('/merchant/coupons');
+    const response = await api.get('/merchants/coupons');
     return response.data;
   },
 
   // Create new coupon
   createCoupon: async (data: CreateCouponRequest) => {
-    const response = await api.post('/merchant/coupons', data);
+    const response = await api.post('/merchants/coupons', data);
     return response.data;
   },
 
   // Update coupon
   updateCoupon: async (id: number, data: Partial<CreateCouponRequest>) => {
-    const response = await api.put(`/merchant/coupons/${id}`, data);
+    const response = await api.put(`/merchants/coupons/${id}`, data);
     return response.data;
   },
 
   // Delete coupon
   deleteCoupon: async (id: number) => {
-    const response = await api.delete(`/merchant/coupons/${id}`);
+    const response = await api.delete(`/merchants/coupons/${id}`);
     return response.data;
   },
 
   // Get coupon analytics
   getCouponAnalytics: async (id: number) => {
-    const response = await api.get(`/merchant/coupons/${id}/analytics`);
+    const response = await api.get(`/merchants/coupons/${id}/analytics`);
     return response.data;
   },
 
   // Get merchant dashboard stats
   getMerchantStats: async () => {
-    const response = await api.get('/merchant/stats');
+    const response = await api.get('/merchants/stats');
     return response.data;
   },
 
   // Verify redemption (merchant side)
   verifyRedemption: async (redemptionId: number) => {
-    const response = await api.post(`/merchant/redemptions/${redemptionId}/verify`);
+    const response = await api.post(`/merchants/redemptions/${redemptionId}/verify`);
     return response.data;
   },
 };
