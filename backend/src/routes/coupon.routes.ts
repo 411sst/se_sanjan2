@@ -1,33 +1,35 @@
 import { Router } from 'express';
+import { browseCoupons, getCouponById, validateCoupon, getCategories } from '../controllers/couponController';
 
 const router = Router();
+
+/**
+ * @route   GET /api/v1/coupons/categories
+ * @desc    Get all coupon categories
+ * @access  Public
+ */
+router.get('/categories', getCategories);
 
 /**
  * @route   GET /api/v1/coupons
  * @desc    Browse/search coupons (public)
  * @access  Public
  */
-router.get('/', (_req, res) => {
-  res.json({ message: 'Browse coupons endpoint' });
-});
+router.get('/', browseCoupons);
 
 /**
  * @route   GET /api/v1/coupons/:id
  * @desc    Get coupon details
  * @access  Public
  */
-router.get('/:id', (_req, res) => {
-  res.json({ message: 'Get coupon details endpoint' });
-});
+router.get('/:id', getCouponById);
 
 /**
  * @route   POST /api/v1/coupons/validate
  * @desc    Validate coupon code
  * @access  Public
  */
-router.post('/validate', (_req, res) => {
-  res.json({ message: 'Validate coupon endpoint' });
-});
+router.post('/validate', validateCoupon);
 
 /**
  * @route   POST /api/v1/coupons/redeem/initiate
@@ -35,7 +37,7 @@ router.post('/validate', (_req, res) => {
  * @access  Private (Customer)
  */
 router.post('/redeem/initiate', (_req, res) => {
-  res.json({ message: 'Initiate redemption endpoint' });
+  res.json({ message: 'Initiate redemption endpoint - To be implemented' });
 });
 
 /**
@@ -44,16 +46,7 @@ router.post('/redeem/initiate', (_req, res) => {
  * @access  Private (Merchant)
  */
 router.post('/redeem/verify', (_req, res) => {
-  res.json({ message: 'Verify redemption endpoint' });
-});
-
-/**
- * @route   GET /api/v1/coupons/categories
- * @desc    Get all coupon categories
- * @access  Public
- */
-router.get('/categories', (_req, res) => {
-  res.json({ message: 'Get categories endpoint' });
+  res.json({ message: 'Verify redemption endpoint - To be implemented' });
 });
 
 export default router;

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { registerCustomer, registerMerchant, login, logout } from '../controllers/authController';
 
 const router = Router();
 
@@ -7,27 +8,21 @@ const router = Router();
  * @desc    Register a new merchant
  * @access  Public
  */
-router.post('/register/merchant', (_req, res) => {
-  res.status(201).json({ message: 'Merchant registration endpoint' });
-});
+router.post('/register/merchant', registerMerchant);
 
 /**
  * @route   POST /api/v1/auth/register/customer
  * @desc    Register a new customer
  * @access  Public
  */
-router.post('/register/customer', (_req, res) => {
-  res.status(201).json({ message: 'Customer registration endpoint' });
-});
+router.post('/register/customer', registerCustomer);
 
 /**
  * @route   POST /api/v1/auth/login
  * @desc    Login user (merchant/customer)
  * @access  Public
  */
-router.post('/login', (_req, res) => {
-  res.json({ message: 'Login endpoint' });
-});
+router.post('/login', login);
 
 /**
  * @route   POST /api/v1/auth/send-otp
@@ -35,7 +30,7 @@ router.post('/login', (_req, res) => {
  * @access  Public
  */
 router.post('/send-otp', (_req, res) => {
-  res.json({ message: 'Send OTP endpoint' });
+  res.json({ message: 'Send OTP endpoint - To be implemented' });
 });
 
 /**
@@ -44,7 +39,7 @@ router.post('/send-otp', (_req, res) => {
  * @access  Public
  */
 router.post('/verify-otp', (_req, res) => {
-  res.json({ message: 'Verify OTP endpoint' });
+  res.json({ message: 'Verify OTP endpoint - To be implemented' });
 });
 
 /**
@@ -53,7 +48,7 @@ router.post('/verify-otp', (_req, res) => {
  * @access  Public
  */
 router.post('/forgot-password', (_req, res) => {
-  res.json({ message: 'Forgot password endpoint' });
+  res.json({ message: 'Forgot password endpoint - To be implemented' });
 });
 
 /**
@@ -62,7 +57,7 @@ router.post('/forgot-password', (_req, res) => {
  * @access  Public
  */
 router.post('/reset-password', (_req, res) => {
-  res.json({ message: 'Reset password endpoint' });
+  res.json({ message: 'Reset password endpoint - To be implemented' });
 });
 
 /**
@@ -71,7 +66,7 @@ router.post('/reset-password', (_req, res) => {
  * @access  Public
  */
 router.post('/refresh-token', (_req, res) => {
-  res.json({ message: 'Refresh token endpoint' });
+  res.json({ message: 'Refresh token endpoint - To be implemented' });
 });
 
 /**
@@ -79,8 +74,6 @@ router.post('/refresh-token', (_req, res) => {
  * @desc    Logout user
  * @access  Private
  */
-router.post('/logout', (_req, res) => {
-  res.json({ message: 'Logout endpoint' });
-});
+router.post('/logout', logout);
 
 export default router;

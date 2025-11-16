@@ -1,7 +1,6 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
 import fs from 'fs';
-import { promisify } from 'util';
 
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../../database/couponify.db');
 const DB_DIR = path.dirname(DB_PATH);
@@ -23,15 +22,33 @@ export const db = new dbMode.Database(DB_PATH, (err) => {
   }
 });
 
-// Promisify database methods for easier use
-const runAsync = promisify(db.run.bind(db));
-const allAsync = promisify(db.all.bind(db));
-const getAsync = promisify(db.get.bind(db));
+// Export promisified methods with proper typing
+export const dbRun = (sql: string, params: any[] = []): Promise<sqlite3.RunResult> => {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function(this: sqlite3.RunResult, err: Error | null) {
+      if (err) reject(err);
+      else resolve(this);
+    });
+  });
+};
 
-// Export promisified methods
-export const dbRun = runAsync;
-export const dbAll = allAsync;
-export const dbGet = getAsync;
+export const dbAll = (sql: string, params: any[] = []): Promise<any[]> => {
+  return new Promise((resolve, reject) => {
+    db.all(sql, params, (err: Error | null, rows: any[]) => {
+      if (err) reject(err);
+      else resolve(rows);
+    });
+  });
+};
+
+export const dbGet = (sql: string, params: any[] = []): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    db.get(sql, params, (err: Error | null, row: any) => {
+      if (err) reject(err);
+      else resolve(row);
+    });
+  });
+};
 
 // Initialize database schema
 export const initializeDatabase = async (): Promise<void> => {
@@ -224,7 +241,7 @@ export const initializeDatabase = async (): Promise<void> => {
 
   try {
     // Enable foreign keys
-    await runAsync('PRAGMA foreign_keys = ON');
+    await dbRun('PRAGMA foreign_keys = ON');
 
     // Split schema into individual statements and execute them
     const statements = schema
@@ -244,7 +261,7 @@ export const initializeDatabase = async (): Promise<void> => {
       .filter(s => s.length > 0);
 
     for (const statement of statements) {
-      await runAsync(statement);
+      await dbRun(statement);
     }
 
     console.log('✅ Database schema initialized successfully');
