@@ -13,6 +13,7 @@ import CustomerWallet from './pages/customer/Wallet';
 
 // Components
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -22,16 +23,30 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/customer/coupons" element={<BrowseCoupons />} />
 
           {/* Merchant Routes */}
           <Route path="/merchant/login" element={<MerchantLogin />} />
           <Route path="/merchant/register" element={<MerchantRegister />} />
-          <Route path="/merchant/dashboard" element={<MerchantDashboard />} />
+          <Route
+            path="/merchant/dashboard"
+            element={
+              <ProtectedRoute requireRole="merchant">
+                <MerchantDashboard />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Customer Routes */}
           <Route path="/customer/login" element={<CustomerLogin />} />
-          <Route path="/customer/coupons" element={<BrowseCoupons />} />
-          <Route path="/customer/wallet" element={<CustomerWallet />} />
+          <Route
+            path="/customer/wallet"
+            element={
+              <ProtectedRoute requireRole="customer">
+                <CustomerWallet />
+              </ProtectedRoute>
+            }
+          />
 
           {/* 404 Route */}
           <Route path="*" element={<div>404 - Page Not Found</div>} />
