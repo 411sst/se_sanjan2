@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { getCustomerWallet } from '../controllers/coupon.controller';
 
 const router = Router();
 
@@ -25,9 +26,7 @@ router.put('/profile', (_req, res) => {
  * @desc    Get customer's coupon wallet
  * @access  Private (Customer)
  */
-router.get('/wallet', (_req, res) => {
-  res.json({ message: 'Get customer wallet endpoint' });
-});
+router.get('/wallet', getCustomerWallet);
 
 /**
  * @route   POST /api/v1/customers/claim/:couponId
