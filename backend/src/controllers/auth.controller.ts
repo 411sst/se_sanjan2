@@ -283,9 +283,6 @@ export const verifyOTP = async (req: Request, res: Response) => {
     // Mark user as verified
     await dbRun(`UPDATE users SET is_verified = 1 WHERE id = ?`, [user.id]);
 
-    // Get customer details
-    const customer = await dbGet(`SELECT * FROM customers WHERE user_id = ?`, [user.id]);
-
     // Generate token
     const token = generateToken(user.id, user.role);
 
